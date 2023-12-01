@@ -12,26 +12,26 @@ words_to_values = {
     "seven": 7,
     "eight": 8,
     "nine": 9,
+    "0": 0,
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 5,
+    "6": 6,
+    "7": 7,
+    "8": 8,
+    "9": 9
 }
 
 
 def p2(input: list[str]) -> int:
     digits = []
     for line in input:
-        integers = [(int(x), i) for i, x in enumerate(line) if x.isdigit()]
-        # find all matches with words to values:
-        for word, value in words_to_values.items():
-            # Regex to check the word is in the line
-            match = re.finditer(word, line)
-            integers.extend([(value, m.start()) for m in match])
+        numbers = [words_to_values[x.group()] for x in re.finditer(
+            "\d|"+"|".join(words_to_values.keys()), line)]
 
-        # Sort the list by the index
-        integers.sort(key=lambda x: x[1])
-
-        # Unwrap list
-        integers = [x[0] for x in integers]
-
-        digits.append(int(f'{integers[0]}{integers[-1]}'))
+        digits.append(int(f'{numbers[0]}{numbers[-1]}'))
 
     return sum(digits)
 
