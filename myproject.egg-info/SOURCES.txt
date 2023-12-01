@@ -1,0 +1,11 @@
+README.md
+setup.py
+01/01_test.py
+01/__init__.py
+01/day_01.py
+common/__init__.py
+common/utils.py
+myproject.egg-info/PKG-INFO
+myproject.egg-info/SOURCES.txt
+myproject.egg-info/dependency_links.txt
+myproject.egg-info/top_level.txt
