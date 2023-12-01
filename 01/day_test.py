@@ -1,13 +1,14 @@
 import pytest
 from common.utils import read_file
-from day_01 import p1, p2
+from part1 import p1
+from part2 import p2
 
 
 @pytest.mark.parametrize(
     "filename, expected",
     [
         pytest.param(
-            "01/test_input.txt", 142, id="test_input.txt",
+            "01/test_input.txt", 142, id="Day 01 Part 1 - Test Input",
         ),
     ],
 )
@@ -20,7 +21,7 @@ def test_p1(filename, expected):
     "filename, expected",
     [
         pytest.param(
-            "01/test_input_2.txt", 281, id="test - 1",
+            "01/test_input_2.txt", 281, id="Day 01 Part 2 - Test Input",
         ),
     ],
 )

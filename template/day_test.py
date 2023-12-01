@@ -1,6 +1,7 @@
 import pytest
 from common.utils import read_file
-from day import p1, p2
+from part1 import p1
+from part2 import p2
 
 
 @pytest.mark.parametrize(

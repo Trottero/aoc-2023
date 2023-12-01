@@ -1,15 +1,5 @@
+from common.utils import run_part
 import re
-from common.utils import read_file
-
-
-def p1(input: list[str]) -> int:
-    digits = []
-    for i in input:
-        integers = [int(x) for x in i if x.isdigit()]
-        digits.append(int(f'{integers[0]}{integers[-1]}'))
-
-    return sum(digits)
-
 
 words_to_values = {
     "zero": 0,
@@ -47,6 +37,4 @@ def p2(input: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    input = read_file("01/input.txt")
-    print(p1(input))
-    print(p2(input))
+    run_part("01/input.txt", p2, 2)

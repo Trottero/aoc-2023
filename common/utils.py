@@ -7,20 +7,16 @@ def read_file(file_path):
 
 
 def run_day(file_path, fn1, fn2):
+    run_part(file_path, fn1, 1)
+    run_part(file_path, fn2, 2)
+
+
+def run_part(file_path: str, fn, part: int):
     input = read_file(file_path)
     # Start Timer for Part 1
     start = time.time()
-    res1 = fn1(input)
+    res = fn(input)
     end = time.time()
-    print(f'Part 1 result:')
-    print(res1)
-    print(f"Part 1 took {end - start} seconds")
-
-    # Start Timer for Part 2
-    start2 = time.time()
-    res2 = fn2(input)
-    end2 = time.time()
-    print(f'Part 2 result:')
-    print(res2)
-    # Print Results
-    print(f"Part 2 took {end2 - start2} seconds")
+    print(f'Part {part} result:')
+    print(res)
+    print(f"Part {part} took {end - start} seconds")

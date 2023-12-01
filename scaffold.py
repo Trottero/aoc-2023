@@ -8,6 +8,12 @@ if __name__ == '__main__':
     parser.add_argument('--day', type=str, required=True)
     args = parser.parse_args()
 
+    # Check if the directory already exists
+    import os.path
+    if os.path.exists(f'{args.day}'):
+        print(f'Day {args.day} already exists!')
+        exit(1)
+
     # Copy the template folder to the new day
     import shutil
     shutil.copytree('template', f'{args.day}')
