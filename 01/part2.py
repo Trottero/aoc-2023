@@ -28,8 +28,8 @@ words_to_values = {
 def p2(input: list[str]) -> int:
     digits = []
     for line in input:
-        numbers = [words_to_values[x.group()] for x in re.finditer(
-            "\d|"+"|".join(words_to_values.keys()), line)]
+        numbers = [words_to_values[x.group(1)] for x in re.finditer(
+            "(?=(\d|"+"|".join(words_to_values.keys()) + "))", line)]
 
         digits.append(int(f'{numbers[0]}{numbers[-1]}'))
 
