@@ -1,4 +1,4 @@
-from common.utils import read_file
+from common.utils import read_file, run_day
 
 
 def p1(input: list[str]) -> int:
@@ -10,6 +10,4 @@ def p2(input: list[str]) -> int:
 
 
 if __name__ == "__main__":
-    input = read_file("\{day\}/input.txt")
-    print(p1(input))
-    print(p2(input))
+    run_day("{day}/input.txt", p1, p2)
