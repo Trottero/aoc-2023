@@ -10,6 +10,7 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     "aoc-2023": true,
-    "**/__pycache__": true
+    "**/__pycache__": true,
+    "**/aoc_2023.egg-info": true
   }
 }
