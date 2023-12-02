@@ -29,3 +29,7 @@ if __name__ == '__main__':
                     f.seek(0)
                     f.write(content.replace('{day}', args.day))
                     f.truncate()
+
+    # Rename the test files so they include the day (makes the test files unique)
+    os.rename(args.day + '/{day}_test.py',
+              f'{args.day}/{args.day}_test.py')
