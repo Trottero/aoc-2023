@@ -19,4 +19,4 @@ def run_part(file_path: str, fn, part: int):
     end = time.time()
     print(f'Part {part} result:')
     print(res)
-    print(f"Part {part} took {end - start} seconds")
+    print(f"Part {part} took {round((end * 1000 - start * 1000), 5)} ms")
