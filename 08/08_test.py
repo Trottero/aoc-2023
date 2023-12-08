@@ -8,7 +8,7 @@ from part2 import p2
     "filename, expected",
     [
         pytest.param(
-            "08/test_input.txt", 0, id="Day 08 Part 1 - Test Input",
+            "08/test_input.txt", 6, id="Day 08 Part 1 - Test Input",
         ),
     ],
 )
@@ -21,7 +21,7 @@ def test_p1(filename, expected):
     "filename, expected",
     [
         pytest.param(
-            "08/test_input.txt", 0, id="Day 08 Part 2 - Test Input",
+            "08/test_input_2.txt", 6, id="Day 08 Part 2 - Test Input",
         ),
     ],
 )
