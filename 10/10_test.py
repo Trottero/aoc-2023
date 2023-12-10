@@ -30,7 +30,7 @@ def test_p1(filename, expected):
     "filename, expected",
     [
         pytest.param(
-            "10/test_input.txt", 0, id="Day 10 Part 2 - Test Input",
+            "10/p2/input_1.txt", 4, id="Day 10 Part 2 - Test Input",
         ),
     ],
 )
