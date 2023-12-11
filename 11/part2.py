@@ -10,15 +10,19 @@ def p2(input: list[str]) -> int:
             if cell == "#":
                 galaxies.append((y, x))
 
+    # Precompute which indices are empty rows / columns
+    empty_rows = [row_empty(input, y) for y in range(len(input))]
+    empty_cols = [col_empty(input, x) for x in range(len(input[0]))]
+
     G: nx.Graph = nx.complete_graph(galaxies)
     for e in G.edges:
         man = manhattan_distance(*e)
 
         (src_y, src_x), (target_y, target_x) = e
         empty_row_count = len(list(y for y in range(
-            min(src_y, target_y), max(src_y, target_y)) if row_empty(input, y)))
+            min(src_y, target_y), max(src_y, target_y)) if empty_rows[y]))
         empty_col_count = len(list(x for x in range(
-            min(src_x, target_x), max(src_x, target_x)) if col_empty(input, x)))
+            min(src_x, target_x), max(src_x, target_x)) if empty_cols[x]))
 
         empty_row_count = empty_row_count * 1000000 - empty_row_count
         empty_col_count = empty_col_count * 1000000 - empty_col_count
