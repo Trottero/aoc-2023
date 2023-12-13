@@ -4,50 +4,54 @@ import re
 
 def p2(input: list[str]) -> int:
     vals = []
-    searched = []
     for line in input:
         row, groups = line.split(" ")
-        row = row * 5
-        groups = groups * 5
+        # row = "?".join([row for _ in range(5)])
+        # groups = ",".join([groups for _ in range(5)])
         groups = [int(x) for x in groups.split(",")]
-        tests = ['']
-        searched.append(row.count("?") * 2)
-        for c in row:
-            if c != "?":
-                tests = [test + c for test in tests]
-            else:
-                tests = [test + "#" for test in tests] + \
-                    [test + "." for test in tests]
 
-        reg = f"^[.]*{'[.]+'.join(['#'*x for x in groups])}[.]*$"
-        vals.append(sum([1 for test in tests if is_valid(test, reg)]))
-    print('searched: ', sum(searched))
+        vals.append(resolve(row, groups))
     return sum(vals)
 
 
-def resolve(remainder: str, groups: list[int]) -> int:
-    if len(groups) == 0 and remainder.count("#") == 0:
-        return 1  # Valid combination
+def resolve(line: str, groups: list[int]) -> int:
+    if len(groups) == 0:
+        if line.count("#") == 0:
+            return 1
+        return 0
 
-    # Validate if this group fits with the left over groups
-    vague_group = re.search(r"[#?]+", remainder)
-    if not vague_group:
-        return 0  # Invalid combination
+    # Work on resolving the next group
+    gs = groups.copy()
+    g = gs.pop(0)
 
-    vague_group_size = len(vague_group.group(0))
-    groups_to_process = groups.copy()
-    expected_group_size = groups_to_process.pop(0)
+    # Remove all leading dots from the line
+    l = line.lstrip(".")
 
-    # Check if the group fits at all
-    if expected_group_size > vague_group_size:
-        return 0  # Invalid combination
+    # Check if even possible after stripping
 
-    start_match = re.search(r"^#+", remainder[vague_group.start():])
-    broken_start_count = len(re.search())
+    if len(l) < g:
+        return 0
+    subtree_counts = [0]
 
+    if re.match(f"^{'[#?]' * g}", l) is not None and len(gs) == 0:
+        # Valid match
+        return 1
 
-def is_valid(test: str, regex: str) -> bool:
-    return re.search(regex, test) is not None
+    # # Check non shifted
+    # if re.match(f"^{'[#?]' * g + '[.?]'}", l) is not None:
+    #     # Resolve without shifting
+    #     subtree_counts.append(resolve(l[g + 1:], gs))
+
+    mat_c = 0
+    mat = re.match(f"^{'[#?]' * g}", l)
+    r = l
+    while mat is not None:
+        # Resolve with shifting
+        subtree_counts.append(resolve(r[g + mat_c + 1:], gs))
+        mat = re.match(f"^[?]{'[#?]' * g}", l[mat_c:])
+        mat_c += 1
+
+    return sum(subtree_counts)
 
 
 if __name__ == "__main__":
