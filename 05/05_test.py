@@ -4,6 +4,7 @@ from part1 import p1
 from part2 import p2
 import part2
 import part2_unmapped
+import part2_bruteforce
 
 
 @pytest.mark.parametrize(
@@ -43,6 +44,19 @@ def test_p2(filename, expected):
 def test_p2(filename, expected):
     # Test cases for p2 function
     assert part2_unmapped.p2(read_file(filename)) == expected
+
+
+@pytest.mark.parametrize(
+    "filename, expected",
+    [
+        pytest.param(
+            "05/test_input.txt", 46, id="Day 05 Part 2 (brute force) - Test Input",
+        ),
+    ],
+)
+def test_p2_bruteforce(filename, expected):
+    # Test cases for p2 function
+    assert part2_bruteforce.p2(read_file(filename)) == expected
 
 
 @pytest.mark.parametrize(

@@ -71,7 +71,7 @@ def test_seed(arg) -> int:
 def map_fn(number: int, mapping_rules: list[tuple[int, int, int]]) -> int:
     # Mapping rules are src, target, length
     for src, target, length in mapping_rules:
-        if number >= src and number <= src + length:
+        if number >= src and number < src + length:
             return target + (number - src)
 
     return number

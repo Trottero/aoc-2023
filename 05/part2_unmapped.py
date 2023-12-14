@@ -24,7 +24,7 @@ def p2(input: list[str]) -> int:
         while len(input) > 0 and input[0] != "":
             rule = input.pop(0)
             target, src, length = re.findall(r"\d+", rule)
-            mapping_rule.append((int(src), int(target), int(length)))
+            mapping_rule.append((int(src), int(target), int(length) - 1))
 
         projection_map.append((mapping_config, mapping_rule))
 
