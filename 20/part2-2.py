@@ -1,5 +1,6 @@
 from common.utils import run_part
 import re
+import math
 
 in_out = {}
 
@@ -11,6 +12,11 @@ flop_memory = {}
 module_dependencies = {}
 
 state = {}
+
+# Assume every conjunction module has a loop
+loops = {}
+
+cycles = {}
 
 
 def p2(input: list[str]) -> int:
@@ -35,6 +41,7 @@ def p2(input: list[str]) -> int:
     for k, v in module_dependencies.items():
         if module_type[k] == "%":
             flop_memory[k] = False
+            loops[k] = [(False, 0)]
         if module_type[k] == "&":
             conj_memory[k] = {dep: False for dep in v}
 
@@ -42,11 +49,43 @@ def p2(input: list[str]) -> int:
     while True:
         done = simulate_press()
         c += 1
-        if done:
-            print("done", c)
+        # Observe the state of all conjunctions and see if they have changed
+        to_rm = []
+        for k, v in loops.items():
+            if module_type[k] == "%":
+                if v[-1][0] != flop_memory[k]:
+                    v.append((flop_memory[k], c))
+                if len(v) > 4:
+                    # cycles[k] = v[-1][1] - v[-3][1]
+                    cycles[k] = v[2][1]
+                    print(k, cycles[k], v)
+                    to_rm.append(k)
+
+        for k in to_rm:
+            loops.pop(k)
+
+        if len(loops) == 0:
+            print("found all cycles")
             break
 
-    return c
+    cycles['broadcaster'] = 1
+    # Filter the "&"
+    cleared_deps = {
+        k: v for k, v in module_dependencies.items() if module_type[k] == "&"}
+
+    while len(cleared_deps) > 0:
+        to_rm = []
+        for k, v in cleared_deps.items():
+            # Check if we can resolve this entire conjunction
+            if all(sv in cycles for sv in v):
+                # This module repeats every n cycles
+                n = max([cycles[sv] for sv in v])
+                cycles[k] = n
+                to_rm.append(k)
+        for k in to_rm:
+            cleared_deps.pop(k)
+
+    return math.lcm(*[v for k, v in cycles.items() if module_type[k] == "&"])
 
 
 def simulate_press() -> bool:
