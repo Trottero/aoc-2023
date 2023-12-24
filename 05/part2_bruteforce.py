@@ -26,7 +26,8 @@ def p2(input: list[str]) -> int:
         while len(input) > 0 and input[0] != "":
             rule = input.pop(0)
             target, src, length = re.findall(r"\d+", rule)
-            mapping_rule.append((int(src), int(target), int(length)))
+            mapping_rule.append(
+                (int(src), int(target), int(length), range(int(src), int(src) + int(length))))
 
         projection_map.append(mapping_rule)
 
@@ -50,7 +51,7 @@ def p2(input: list[str]) -> int:
         tqdm.write(f'Brute forcing seed {seed_start} ({i+1} / {len(seeds)})..')
 
         results = process_map(test_seed, range(
-            seed_start, seed_start + seed_length), chunksize=1_000, max_workers=16)
+            seed_start, seed_start + seed_length), chunksize=1_000, max_workers=1)
         total_processed += len(results)
         intermediate_results.append(min(results))
 
@@ -68,10 +69,10 @@ def test_seed(arg) -> int:
     return seed
 
 
-def map_fn(number: int, mapping_rules: list[tuple[int, int, int]]) -> int:
+def map_fn(number: int, mapping_rules: list[tuple[int, int, int, range]]) -> int:
     # Mapping rules are src, target, length
-    for src, target, length in mapping_rules:
-        if number >= src and number < src + length:
+    for src, target, length, r in mapping_rules:
+        if number in r:
             return target + (number - src)
 
     return number
