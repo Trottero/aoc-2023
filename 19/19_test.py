@@ -2,6 +2,7 @@ import pytest
 from common.utils import read_file
 from part1 import p1
 from part2 import p2
+import part2_2
 
 
 @pytest.mark.parametrize(
@@ -27,4 +28,4 @@ def test_p1(filename, expected):
 )
 def test_p2(filename, expected):
     # Test cases for p2 function
-    assert p2(read_file(filename)) == expected
+    assert part2_2.p2(read_file(filename)) == expected
