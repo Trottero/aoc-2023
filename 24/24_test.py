@@ -23,7 +23,7 @@ def test_p1(filename, minr, maxr, expected):
     "filename, expected",
     [
         pytest.param(
-            "24/test_input.txt", 0, id="Day 24 Part 2 - Test Input",
+            "24/test_input.txt", 24, id="Day 24 Part 2 - Test Input",
         ),
     ],
 )
