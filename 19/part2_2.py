@@ -34,36 +34,17 @@ def p2(input: list[str]) -> int:
         input.pop(0)
     input.pop(0)
 
-    letter_counts = {
-        'x': [],
-        'm': [],
-        'a': [],
-        's': [],
-    }
+    # Prayge that the rules are exclusive.
 
-    for letter in letter_counts.keys():
-        for i in range(1, 4001):
-            if part_accepted({letter: i}, letter):
-                letter_counts[letter].append(i)
-
-    return len(letter_counts['x']) * len(letter_counts['m']) * len(letter_counts['a']) * len(letter_counts['s'])
+    ranges = resolve_rule('int', {'x': range(1, 4001), 'm': range(
+        1, 4001), 'a': range(1, 4001), 's': range(1, 4001)})
 
 
-def part_accepted(part: dict[str, int], piece: str, curr='in') -> bool:
-    ncurr = curr
-    if ncurr in ['A', 'R']:
-        return ncurr == 'A'
-
-    for left, op, right, dest in rules[ncurr]:
-        if left is not piece:
+def resolve_rule(rulekey: str, constraints: dict[str, range]) -> dict[str, range]:
+    subrules = rules[rulekey]
+    for i, (left, op, right, dest) in enumerate(subrules):
+        if dest != 'A':
             continue
-
-        if rule_map[op](part[left], right):
-            return part_accepted(part, piece, dest)
-        return False
-
-    # If not in the rules, then we give it free pass for this depth
-    return any(part_accepted(part, piece, a[3]) for a in rules[ncurr])
 
 
 if __name__ == "__main__":
